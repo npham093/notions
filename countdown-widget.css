@@ -1,0 +1,31 @@
+#time-group {
+  display: flex;
+  font-size: 15pt;
+  font-family: arial;
+  font-weight: bold;
+  color: white;
+  
+}
+  #days-group, #hours-group {
+    padding: 0.5em 0;
+    position: relative;
+    display: block;
+    text-align: center;
+    margin-top: auto;
+    margin-bottom: 0;
+    background-color: pink;
+    height: 5em;
+    width: 4em;
+    border-radius: 5px;
+  }
+  #days-group {
+    margin-right: 5px;
+  }
+  
+  #days, #hours {
+    font-size: 40pt;
+  }
+  .time-base {
+    margin-top: 0.5em;
+    height: 1em;
+  }
