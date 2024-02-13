@@ -4,28 +4,55 @@
   font-family: arial;
   font-weight: bold;
   color: white;
-  
+/*   background-color: orange; */
+  max-width: 300px;
 }
-  #days-group, #hours-group {
-    padding: 0.5em 0;
-    position: relative;
-    display: block;
-    text-align: center;
-    margin-top: auto;
-    margin-bottom: 0;
-    background-color: #e9d2d5;
-    height: 5em;
-    width: 4em;
-    border-radius: 5px;
+.time-group {
+  padding: 0.5em 0;
+  position: relative;
+  display: block;
+  text-align: center;
+  margin-top: auto;
+  margin-bottom: 0;
+  background-color: #e9d2d5;
+  height: 5em;
+  width: 4em;
+  border-radius: 5px;
+  margin-right: 5px;
+}
+#days, #hours, #minutes, #seconds {
+  font-size: 40pt;
+}
+.time-base {
+  margin-top: 0.5em;
+  height: 1em;
+}
+
+#plane-holder {
+/*   background-color: pink; */
+  width: 300px;
+  height: 50px;
+  display: flex;
+  margin-top: 10px;
+  line-height: 50px;
+}
+#plane {
+  font-size: 20pt;
+  transform: rotate(-135deg);
+  margin-right: 0;
+  margin-left: auto;
+  animation: flying 4s linear infinite;
+}
+
+@keyframes flying {
+  0% {
+    margin-right: 0
   }
-  #days-group {
-    margin-right: 5px;
+  35% {
+    font-size: 25pt;
   }
-  
-  #days, #hours {
-    font-size: 40pt;
+  100% {
+    margin-right: 300px;
+    font-size: 10pt;
   }
-  .time-base {
-    margin-top: 0.5em;
-    height: 1em;
-  }
+}
