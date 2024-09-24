@@ -21,46 +21,32 @@
 
             font-family: Arial, Helvetica, sans-serif;
 
-            font-size: 25pt;
+            font-size: 30pt;
 
             display: grid;
 
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(12, 1fr);
 
             grid-template-rows: repeat(3, 1fr);
 
         }
 
         #card-container {
-            width: 500px;
-
-            height: 300px;
-
+            width: 100%;
+            height: 350px;
             background-color: white;
-
             text-align: center;
-
-            padding: 2em;
-
             border-radius: 20px;
-
             margin-left: auto;
-
             margin-right: auto;
-
-            grid-column: 2 / 3;
-
+            grid-column: 5 / 9;
             grid-row: 2 / 3;
-
             display: grid;
-
-            grid-template-rows: repeat(5, 1fr);
-
-            grid-template-columns: repeat(5, 1fr);
-
+            grid-template-rows: repeat(10, 1fr);
+            grid-template-columns: repeat(10, 1fr);
         }
 
-        button {
+        .button-holder button {
             height: 40px;
 
             width: 80px;
@@ -83,7 +69,7 @@
 
         }
 
-        button:hover {
+        .button-holder button:hover {
             color: #3e3636;
 
             transform: translateY(var(--button-hover-indent));
@@ -94,7 +80,7 @@
 
         }
 
-        button:active {
+        .button-holder button:active {
             /* background-color: #0ac6c9;
  */
             transform: translateY(var(--button-active-indent));
@@ -108,9 +94,6 @@
         }
 
         .button-holder {
-            margin-bottom: 0;
-
-            margin-top: auto;
 
             text-align: center;
 
@@ -118,9 +101,9 @@
 
             margin-right: auto;
 
-            grid-row: 5 / 6;
+            grid-row: 8 / 11;
 
-            grid-column: 1 / 6;
+            grid-column: 2 / 10;
 
         }
 
@@ -130,12 +113,87 @@
         }
 
         #main-text {
-            grid-column: 1 / 6;
+            grid-column: 2 / 10;
 
-            grid-row: 1 / 5;
+            grid-row: 2 / 8;
 
             margin: 0;
 
+        }
+
+        .previous-next-buttons {
+            font-size: 15pt;
+            background: none;
+            border: 1px solid grey;
+        }
+
+        #action-buttons-holder {
+            grid-column: 1 / 4;
+            grid-row: 1 / 4;
+            grid-template-columns: repeat(10, 1fr);
+            display: grid;
+            grid-template-rows: repeat(10, 1fr);
+            height: 100%;
+        }
+
+        #new-card-container {
+            grid-row: 2 / 3;
+            grid-column: 2 / 10;
+            display: flex;
+            justify-content: space-between;
+                input {
+                height: 2em;
+                font-size: 15pt;
+                margin-bottom: 1em;
+                border-radius: 13px;
+                border: none;
+                padding: 15px;
+                width: 100%;
+            }
+        }
+
+        #action-buttons-holder button {
+            height: 3em;
+            width: 3em;
+            background: beige;
+            border-radius: 15px;
+            border: 1px solid brown;
+        }
+        #vocab-list-holder {
+            grid-row: 3 / 11;
+            grid-column: 2 / 10;
+            font-size: 14pt;
+            background-color: white;
+            border-radius: 15px;
+            margin: 2em 0;
+            height: 400px;
+            overflow: auto;
+            padding: 1em;
+
+            button {
+                background: none;
+                border: none;
+                cursor: pointer;
+            }
+
+            button:hover {
+                color: grey;
+            }
+        }
+        .table-english {
+            grid-column: 2 / 7;
+        }
+        .table-korean {
+            grid-column: 7 / 13;
+        }
+        .vocab-row {
+            margin-bottom: 1em;
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+
+            button {
+                grid-column: 1 / 2;
+            }
         }
     </style>
 </head>
@@ -143,41 +201,43 @@
 <body>
     <div id="action-buttons-holder">
         <div id="new-card-container">
-            <input placeholder="Korean" type="text" id="new-korean-word">
             <input placeholder="English" type="text" id="new-english-meaning">
+            <input placeholder="Korean" type="text" id="new-korean-word">
+            <button id="add-button">+</button>
         </div>
-        <button id="add-button">+</button>
         <button id="save-button">Save</button>
+        
+        <div id="vocab-list-holder">
+        </div>
     </div>
     <div id="card-container">
-        <button id="back-button" style="left: -3em;
-        position: relative;
-        top: -8em;">Back</button>
-        <p id="main-text"></p>
-        <div class="button-holder">
-            <button id="flip-button"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                    class="bi bi-arrow-left-right" viewBox="0 0 16 16">
-                    <path fill-rule="evenodd"
-                        d="M1 11.5a.5.5 0 0 0 .5.5h11.793l-3.147 3.146a.5.5 0 0 0 .708.708l4-4a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 11H1.5a.5.5 0 0 0-.5.5m14-7a.5.5 0 0 1-.5.5H2.707l3.147 3.146a.5.5 0 1 1-.708.708l-4-4a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 4H14.5a.5.5 0 0 1 .5.5" />
-                </svg> </button> <button id="incorrect-button"> <svg xmlns="http://www.w3.org/2000/svg" width="16"
-                    height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
-                    <path
-                        d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z" />
-                </svg> </button> <button id="next-button"> <svg xmlns="http://www.w3.org/2000/svg" width="16"
-                    height="16" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16">
-                    <path
-                        d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425z" />
-                </svg> </button> <button id="restart-button"> <svg xmlns="http://www.w3.org/2000/svg" width="16"
-                    height="16" fill="currentColor" class="bi bi-arrow-counterclockwise" viewBox="0 0 16 16">
-                    <path fill-rule="evenodd" d="M8 3a5 5 0 1 1-4.546 2.914.5.5 0 0 0-.908-.417A6 6 0 1 0 8 2z" />
-                    <path
-                        d="M8 4.466V.534a.25.25 0 0 0-.41-.192L5.23 2.308a.25.25 0 0 0 0 .384l2.36 1.966A.25.25 0 0 0 8 4.466" />
-                </svg> </button>
-        </div>
+        <button class="previous-next-buttons" id="back-button" style="grid-row: 1 / 11;
+  grid-column: 1 / 2;"><</button>
+                <p id="main-text"></p>
+                <div class="button-holder">
+                    <button id="flip-button"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                            fill="currentColor" class="bi bi-arrow-left-right" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd"
+                                d="M1 11.5a.5.5 0 0 0 .5.5h11.793l-3.147 3.146a.5.5 0 0 0 .708.708l4-4a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 11H1.5a.5.5 0 0 0-.5.5m14-7a.5.5 0 0 1-.5.5H2.707l3.147 3.146a.5.5 0 1 1-.708.708l-4-4a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 4H14.5a.5.5 0 0 1 .5.5" />
+                        </svg> </button> <button id="incorrect-button"> <svg xmlns="http://www.w3.org/2000/svg"
+                            width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+                            <path
+                                d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z" />
+                        </svg> </button> <button id="next-button"> <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                            height="16" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16">
+                            <path
+                                d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425z" />
+                        </svg> </button> <button id="restart-button"> <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                            height="16" fill="currentColor" class="bi bi-arrow-counterclockwise" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd"
+                                d="M8 3a5 5 0 1 1-4.546 2.914.5.5 0 0 0-.908-.417A6 6 0 1 0 8 2z" />
+                            <path
+                                d="M8 4.466V.534a.25.25 0 0 0-.41-.192L5.23 2.308a.25.25 0 0 0 0 .384l2.36 1.966A.25.25 0 0 0 8 4.466" />
+                        </svg> </button>
+                </div>
 
-        <button id="next-button-2" style="left: 22em;
-        position: relative;
-        top: -8em;">Next</button>
+                <button class="previous-next-buttons" id="next-button-2" style="grid-row: 1 / 11;
+  grid-column: 10 / 11;">></button>
     </div>
 </body>
 <script>
@@ -189,37 +249,37 @@
     var addButton = document.getElementById("add-button");
     var saveButton = document.getElementById("save-button");
     var sampleDict = {
-    "Hopes for the future": "장래 희망[히망] ",
-    "Singer": "가수",
-    "Police officer": "경찰",
-    "Scientist": "과학자",
-    "Model": "모델",
-    "Athlete": "운동선수",
-    "Fireman": "소방관",
-    "Veterinarian": "수의사",
-    "Artist": "화가",
-    "Spring": "봄",
-    "Summer": "여름",
-    "Fall": "가을",
-    "Winter": "겨울",
-    "To be brave": "용감해요",
-    "Grade": "학년",
-    "Monday": "월요일",
-    "Tuesday": "화요일",
-    "Wednesday": "수요일",
-    "Thursday": "목요일",
-    "Friday": "금요일",
-    "Club": "동아리",
-    "Comic book": "만화책",
-    "Week": "주",
-    "To invite": "초대해요",
-    "Together": "같이",
-    "Figure": "모습",
-    "Surely": "꼭",
-    "Author": "작가",
-    "Diary": "일기",
-    "To gather": "모이다"
-};
+        "Hopes for the future": "장래 희망[히망] ",
+        "Singer": "가수",
+        "Police officer": "경찰",
+        "Scientist": "과학자",
+        "Model": "모델",
+        "Athlete": "운동선수",
+        "Fireman": "소방관",
+        "Veterinarian": "수의사",
+        "Artist": "화가",
+        "Spring": "봄",
+        "Summer": "여름",
+        "Fall": "가을",
+        "Winter": "겨울",
+        "To be brave": "용감해요",
+        "Grade": "학년",
+        "Monday": "월요일",
+        "Tuesday": "화요일",
+        "Wednesday": "수요일",
+        "Thursday": "목요일",
+        "Friday": "금요일",
+        "Club": "동아리",
+        "Comic book": "만화책",
+        "Week": "주",
+        "To invite": "초대해요",
+        "Together": "같이",
+        "Figure": "모습",
+        "Surely": "꼭",
+        "Author": "작가",
+        "Diary": "일기",
+        "To gather": "모이다"
+    };
     var mainDictionary = { "Informal speech": "반말", "Formal speech": "존댓말", "Final consonant": "받침", "Hello": "안녕하세요", "Good-bye (go well: you can say to someone who leaves)": "안녕히 가세요 ", "Good-bye (stay well: you can say to someone who stays)": "안녕히 계세요", "Name": "이름", "What": "뭐(=무엇) ", "Am/is/are": "예요/이에요", "I + topic marker": "저는", "This/these + subject marker": "이게 is short for 이것(this/these)+이(subject marker)", "That/those + subject marker": "저게 is short for 저것(that/those)+이(subject marker)", "Desk": "책상", "Clock": "시계", "Pencil": "연필", "Chair": "의자", "Bag": "가방", "Book": "책", "Blackboard": "칠판", "Eraser": "지우개", "Notebook": "공책", "Yes": "네", "No": "아니요", "Apple": "사과", "Milk": "우유", "Bear": "곰", "Strawberry": "딸기", "Juice": "주스", "Lion": "사자", "Bread": "빵", "Puppy": "강아지", "Cat": "고양이", "Is this N?": "이게 N예요/이에요?", "Subject marker": "Subject + 이/가. 이/가 is a subject marker. 받침O → 이. 받침X → 가", "Where is place noun?": "Place noun이/가 어디예요?", "Here": "여기", "There": "저기", "School": "학교", "House": "집", "Park": "공원", "Swimming pool": "수영장", "Classroom": "교실", "Zoo": "동물원", "Place particle indicates the place where a person or thing is located or moves": "N + 에", "To be": "있다", "Not to be": "없다", "To go": "가다", "To come": "오다", "Room": "방", "Living room": "거실", "Bed": "침대", "Piano": "피아노", "Computer": "컴퓨터", "Television/TV": "텔레비전/티비", "Where is N?": "N이/가 어디에 있어요?", "Verb used to ask that something or someone exists": "있어요", "There is not": "없어요", "Kitchen": "부엌", "Playground": "놀이터", "Dining table": "식탁", "Seesaw": "시소", "Refrigerator": "냉장고", "Swing": "그네", "Place particle indicates the place where an action occurs and is used with a variety verbs": "N + 에서", "Who?": "누구?", "Topic marker emphasize place or what person is doing. Emphasize action": "Topic N + 은/는", "Topic marker emphasize who is doing": "N + 이/가", "Object marker": "Object + 을/를", "What are you doing?": "뭘 해요?", "Time particle": "N + 에. However, '-에' is not attached to the nouns such as '어제, 오늘, 내일, 지금.'", "Do you have + N?": "N + 이/가 있어요(to have)?", "Whose": "누구 + N", "My (humble first person possesive noun)": "제", "First person possesive noun": "내", "Is not": "N + 이/가 아니에요", "Korea": "한국", "The United States": "미국", "Japan": "일본", "China": "중국", "The United Kingdom": "영국", "Grandfather": "할아버지", "Grandmother": "할머니", "Dad": "아빠", "Mom": "엄마", "Younger Sister": "여동생", "Younger Brother": "남동생", "Company": "회사", "Department Store": "백화점", "Kindergarten": "유치원", "Hospital": "병원", "Pharmacy": "약국", "Supermarket": "슈퍼마켓/슈퍼", "To Go": "가요", "To Come": "와요", "Newspaper": "신문", "To Drink": "마셔요", "Picture": "그림", "To Read": "읽어요", "To Eat": "먹어요", "To Watch/See": "봐요", "To Draw/Paint": "그려요", "To Like, be good": "좋아요[조아요]", "To not like, to hate": "싫어요[시러요]", "Ice cream": "아이스크림", "Candy": "사탕", "Snack": "과자", "Dumpling": "만두", "Pizza": "피자", "Spaghetti": "스파게티", "To like": "좋아해요", "To not like, to hate": "싫어해요", "Bulgogi": "불고기", "Kimchi": "김치", "Rice/meal": "밥", "Who + subject marker": "누가 is short for 누구(who) + 가(Subject marker).", "To sing": "노래해요", "To swim": "수영해요", "To exercise": "운동해요", "To play soccer": "축구해요", "To call/be on the phone": "전화해요", "To study": "공부해요", "Morning": "아침", "Evening": "저녁", "Yesterday": "어제", "Today": "오늘", "Tomorrow": "내일", "Now": "지금", "Mountain": "산", "Sea": "바다", "Afternoon lunch": "점심", "Toy": "장난감", "Train": "기차", "Plane": "비행기", "Car": "자동차/차", "Doll": "인형", "Rabbit": "토끼", "To have": "있어요", "To not have": "없어요", "Pencil case": "필통", "Umbrella": "우산", "Shoes": "신발", "Clothes": "옷", "Scissors": "가위", "Skirt": "치마", "Pants": "바지", "Sneakers": "운동화", "Dress shoes": "구두", "Glasses": "안경", "Socks": "양말", "Hat/cap": "모자", "Slide": "미끄럼틀", "Bicycle": "자전거", "To ride": "타요", "To buy": "사요", "1 (Sino-Korean number)": "일", "2 (Sino-Korean number)": "이", "3 (Sino-Korean number)": "삼", "4 (Sino-Korean number)": "사", "5 (Sino-Korean number)": "오", "6 (Sino-Korean number)": "육", "7 (Sino-Korean number)": "칠", "8 (Sino-Korean number)": "팔", "9 (Sino-Korean number)": "구", "10 (Sino-Korean number)": "십", "15 (Sino-Korean number)": "십오", "30 (Sino-Korean number)": "삼십", "123-4567 (phone number)": "일이삼 에(-) 사오육칠", "50 won (Korean currency)": "오십 원", "1 Dollar (US)": "일 달러", "#Year #Month #Day (Date)": "#년(year) #월(month) #일(day)", "January 23rd": "일 월(month) 이십삼 일(day)", "#Minute #Second(s) (Time)": "#분(minute) #초(second). 10 minutes 35 seconds = 십 분(minute) 삼십오 초(second)", "What is the date today?": "오늘 며칠이에요?", "Hour (Time)": "1 o'clock 한 시. 15 hours 열다섯 시간", "Counting particle for things": "개", "Counting particle for age": "살", "1 + counter": "한 + counter", "2 + counter": "두 + counter", "3 + counter": "세 + counter", "4 + counter": "네 + counter", "20 + counter": "스무 + counter", "1 + Ordinal number": "첫 번째(first)", "#Ordinal number (not 1)": "# 번째. Ex) 두 번째(second) 세 번째(third)...", "1 (Pure-Korean number)": "하나", "2 (Pure-Korean number)": "둘", "3 (Pure-Korean number)": "셋", "4 (Pure-Korean number)": "넷", "5 (Pure-Korean number)": "다섯", "6 (Pure-Korean number)": "여섯", "7 (Pure-Korean number)": "일곱", "8 (Pure-Korean number)": "여덟", "9 (Pure-Korean number)": "아홉", "10 (Pure-Korean number)": "열", "20 (Pure-Korean number)": "스물", "30 (Pure-Korean number)": "서른", "40 (Pure-Korean number)": "마흔", "50 (Pure-Korean number)": "쉰", "What time is it now?": "지금 몇 시예요?", "To love": "사랑해요", "Be happy": "행복해요", "Family": "가족", "Thank you": "고맙습니다/감사합니다", "I'm sorry": "죄송합니다", "Congratulations": "축하합니다", "I'll eat well. (The greeting expression before a meal)": "잘 먹겠습니다", "I ate well. (The greeting expression after a meal)": "잘 먹었습니다", "Formal polite style in Korean": "합니다. 받침O → -습니다. -습니까? 받침X → -ㅂ니다. -ㅂ니까?", "Informal polite style": "해요 style is both honorific and casual. It is usually used in casual and everyday situations.", "Father": "아버지", "Mother": "어머니", "Maternal grandfather": "외할아버지", "Maternal grandmother": "외할머니", "Older brother (for males/females)": "형 / 오빠", "Older sister (for males/females)": "누나 / 언니", "Person": "사람", "People counter": "명", "Honorific form of people counter": "분", "Animal counter": "마리", "Pattern": "무늬[무니]", "To dislike": "싫어해요", "To like": "좋아해요", "Be cute": "귀여워요", "Be short": "짧아요", "Be long": "길어요", "Be clean": "깨끗해요 [깨끄태요]", "Be dirty": "더러워요", "Be smart": "똑똑해요", "Be pretty": "예뻐요", "Be fun": "재미있어요", "Be small": "작아요", "Be big": "커요", "Leaf": "나뭇잎[나문닢]", "Foods": "음식", "What kind of, what. Attached in front of nouns to ask for specific information": "무슨 + N. Ex) 무슨 책을 읽어요? What kind of books do you read?", "Topic marker which indicates the topic of the sentence.": "Topic N + 은/는. It means ‘as for-’ or ‘when it comes to-’. 받침O → 은. 받침X → 는", "Eye": "눈", "To introduce": "소개해요", "To meet": "만나요", "Pet": "애완동물", "Fruit": "과일", "Bean": "콩", "V/A [not]. Negate the meaning": "안. Ex) 안 먹어요. I don’t eat. 안 걸어요. I don’t walk", "Concert": "음악회/콘서트", "Weekend": "주말", "To walk": "걸어요", "To listen": "들어요", "To do homework": "숙제해요", "To have a meal": "식사해요", "To learn": "배워요", "To rest": "쉬어요", "Often": "자주", "Fairy tale book": "동화책", "This time": "이번", "These days": "요즘", "Used to change a verb to a noun. Verb stem + [] -> V-ing": "Verb stem + -기. Ex) 운동하다 + 기 → 운동하기 exercising. 밥을 먹다 + 기 → 밥 먹기 eating a meal", "With/and": "하고", "Hobby": "취미", "Fish": "물고기/생선", "Musical instruments": "악기", "Baseball": "야구", "Basketball": "농구", "Movie": "영화", "Soccer": "축구", "To raise": "길러요(기르다)", "To run": "달려요(달리다) ", "To play (instruments)": "연주해요", "To hit, play (the piano, drum, badminton...)": "쳐요(치다)", "To clean": "청소해요", "Alone": "혼자", "To make": "만들다", "Really": "정말", "Life": "생활", "To play, hang out": "놀아요", "To cook": "요리하다", "To wake up": "일어나다", "To sleep": "잠을 자다", "Also, too, as well, in addition": "N + 도 ", "And": "그리고", "Subject": "과목", "Science": "과학", "Art": "미술", "Society": "사회", "Mathematics": "수학", "English": "영어", "Music": "음악", "Physical Education": "체육", "Korean": "한국어", "A.M./P.M.": "오전/오후", "Timetable": "시간표", "V/A - [not]. Used to negate the meaning": "V/A -지 않다. ex) 가지 않아요. I don’t go. 먹지 않아요. I don’t eat.", "But": "하지만", "Science museum": "과학관", "Library": "도서관", "Art museum": "미술관", "Museum": "박물관", "Movie theater": "영화관", "Gym": "헬스장/체육관", "Saturday": "토요일", "Sunday": "일요일", "To close": "닫아요", "To open": "열어요", "Sometimes": "가끔", "Too (much of something)": "너무", "Be far": "멀다", "Be busy": "바쁘다", "Sportswear": "운동복", "Paper": "종이", "Brush": "붓", "Letter": "글씨", "Calligraphy": "붓글씨", "Tradition": "전통", "Dance": "춤", "To dance": "춤을 추다", "Game": "놀이", "To present": "발표하다", "Presentation": "발표회", "Hall": "강당", "Map": "지도", "Kicking Jegi": "제기차기", "Chicken fight": "닭싸움", "Arm wrestling": "팔씨름", "Rubber band game": "고무줄놀이", "Korean board game": "윷놀이", "N + Direction + (location marker)": "N + Direction + 에", "Then": "그러면", "Above/up": "위", "Below/down": "밑/아래", "Front": "앞", "Behind/back": "뒤", "Next/beside": "옆", "Between": "사이", "Building": "건물", "Science room": "과학실", "Art room": "미술실", "Music": "음악실", "Bank": "은행", "Birthday": "생일", "Over there": "거기", "V -(으)세요 is used to make requests or give orders, suggestions, and directions politely": "받침O → 으세요. 받침X → 세요. Ex) 가세요. Go, please. 읽으세요. Read, please.", "N + (으)로 [to, toward]": "N + (으)로 indicates direction. 받침O → 으로. 받침X, ㄹ → 로. Ex) 집으로 to the house. 거실로 to the living room. 학교로 to school", "Inside": "안", "Outside": "밖", "right": "오른쪽", "left": "왼쪽", "Near": "근처", "Straight": "똑바로", "Station": "정류장", "Floor": "층", "Crosswalk": "횡단보도", "to cross": "건너다", "to buy": "사요", "to sell": "팔아요", "Flower shop": "꽃집" };
     let currentNumber = 0;
     var dictionaryKeys = Object.keys(sampleDict).reverse();
@@ -298,18 +358,56 @@
     function addWord() {
         let koreanWord = document.getElementById('new-korean-word');
         let englishWord = document.getElementById('new-english-meaning');
-        sampleDict[englishWord.value] = koreanWord.value;
-        console.log(sampleDict)
-        koreanWord.value = '';
-        englishWord.value = '';
-        console.log(koreanWord)
-        console.log(sampleDict)
-        restart();
+        if (koreanWord.value !== '' && englishWord.value !== '') {
+            sampleDict[englishWord.value] = koreanWord.value;
+            console.log(sampleDict)
+            createHtmlList(englishWord.value);
+            koreanWord.value = '';
+            englishWord.value = '';
+            console.log(koreanWord)
+            console.log(sampleDict)
+            // updateVocabList();
+            restart();
+        }
     }
     function saveData() {
         console.log(sampleDict);
     }
     createCard();
+    function createHtmlList(word) {
+        let vocabListHolder = document.getElementById('vocab-list-holder');
+        let koreanTable = document.getElementById('table-korean');
+        let englishTable = document.getElementById('table-english');
+        let newRow = document.createElement('div');
+        newRow.classList.add('vocab-row');
+        let engWord = document.createElement('div');
+        let korWord = document.createElement('div');
+        let deleteButton = document.createElement('button');
+        deleteButton.addEventListener('click', function() {
+            deleteWord(word, newRow);
+        });
+        deleteButton.innerHTML = 'X';
+        korWord.classList.add('table-korean');
+        engWord.classList.add('table-english');
+        engWord.innerText = word;
+        newRow.prepend(deleteButton);
+        korWord.innerText = sampleDict[word];
+        newRow.appendChild(engWord);
+        newRow.appendChild(korWord);
+        vocabListHolder.appendChild(newRow);
+        
+    }
+    function updateVocabList() {
+        for (let word of Object.keys(sampleDict)) {
+            createHtmlList(word);
+        }
+    }
+    function deleteWord(wordKey, tableRow) {
+        tableRow.remove();
+        delete sampleDict[wordKey];
+
+    }
+    updateVocabList();
 </script>
 
 </html>
