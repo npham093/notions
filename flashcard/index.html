@@ -223,7 +223,7 @@
         }
 
         #card-groups {
-            height: 2em;
+            height: 3em;
             display: flex;
             overflow: auto;
 
@@ -755,7 +755,7 @@
         }
     };
     showFront = true;
-
+    selectedUnit = '';
     flipButton.addEventListener('click', flipCard);
     document.getElementById('main-text').addEventListener('click', flipCard);
 
@@ -830,9 +830,10 @@
         let koreanWord = document.getElementById('new-korean-word');
         let englishWord = document.getElementById('new-english-meaning');
         if (koreanWord.value !== '' && englishWord.value !== '') {
-            sampleDict[englishWord.value] = koreanWord.value;
+            unitList[selectedUnit][koreanWord.value] = englishWord.value;
+            sampleDict[koreanWord.value] = englishWord.value;
             console.log(sampleDict)
-            createHtmlList(englishWord.value);
+            createHtmlList(koreanWord.value);
             koreanWord.value = '';
             englishWord.value = '';
             console.log(koreanWord)
@@ -895,10 +896,12 @@
         console.log(unitList[unit]);
         sampleDict = JSON.parse(JSON.stringify(unitList[unit]));
         unitList[unit] = sampleDict;
+        selectedUnit = unit;
         updateVocabList();
         restart();
     }
     updateVocabList();
+    loadUnit('unit 1');
     createCard();
 </script>
 
