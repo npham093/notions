@@ -15,7 +15,7 @@
         }
 
         body {
-            background-image: linear-gradient(to bottom right, #563fc0, #0ac6c9);
+            background-image: linear-gradient(to bottom right, #0e004d, #20023e);
 
             margin: 0;
 
@@ -29,13 +29,24 @@
 
             grid-template-rows: repeat(3, 1fr);
             height: 100%;
+            color: white;
 
+        }
+
+        #grid-body {
+            background-size: 50px 50px;
+            background-image: linear-gradient(to right, #f5f5dc4a 1px, transparent 1px), linear-gradient(to bottom, #f5f5dc2e 1px, transparent 1px);
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            z-index: -1;
         }
 
         #card-container {
             width: 100%;
             height: 350px;
-            background-color: white;
+            background-color: #21185e;
+            border: 1px solid beige;
             text-align: center;
             border-radius: 20px;
             margin-left: auto;
@@ -116,7 +127,7 @@
         #main-text {
             grid-column: 2 / 10;
 
-            grid-row: 2 / 8;
+            grid-row: 3 / 8;
 
             margin: 0;
 
@@ -127,6 +138,7 @@
             background: none;
             border: 1px transparent;
             cursor: pointer;
+            color: beige;
 
             &:hover {
                 svg {
@@ -162,6 +174,16 @@
             }
         }
 
+        input {
+                height: 2em;
+                font-size: 15pt;
+                margin-bottom: 1em;
+                border-radius: 13px;
+                border: none;
+                padding: 15px;
+                width: 100%;
+
+        }
         #action-buttons-holder button {
             height: 3em;
             width: 3em;
@@ -183,9 +205,10 @@
             height: calc(100% - 4em);
             overflow: auto;
             padding: 1em;
-            background-color: white;
+            background-color: #21185e;
             border-bottom-left-radius: 15px;
             border-bottom-right-radius: 15px;
+            border: 1px solid beige;
 
             button {
                 background: none;
@@ -226,23 +249,46 @@
             height: 3em;
             display: flex;
             overflow: auto;
+            margin-right: 0.5em;
 
             .card {
                 border-top-left-radius: 15px;
                 border-top-right-radius: 15px;
-                background-color: white;
+                background-color: #21185e;
                 padding: 0 1em;
                 line-height: 2em;
                 border-bottom: #beccd2 solid 1px;
                 border-right: #beccd2 solid 1px;
                 cursor: pointer;
                 white-space: nowrap;
+                border: 1px solid beige;
+                
             }
 
+            .active-unit {
+            background-color: #0ac6c9 !important;
+            }
             .card:hover {
                 background-color: #b0ddf0;
             }
 
+        }
+
+        #unit-lists {
+            display: flex;
+        }
+
+        #card-unit {
+            background: beige;
+            width: 100%;
+            grid-row: 1 / 2;
+            grid-column: 1 / 11;
+            border-top-left-radius: 18px;
+            border-top-right-radius: 18px;
+            border: 1px solid white;
+            color: #21185e;
+            font-size: 18pt;
+            text-transform: capitalize;
         }
 
         @media only screen and (max-width: 1300px) {
@@ -258,21 +304,27 @@
 </head>
 
 <body>
+    <div id="grid-body"></div>
     <div id="action-buttons-holder">
+        <div id="languages"></div>
         <button id="save-button">Save</button>
         <div id="new-card-container">
-            <input placeholder="Korean" type="text" id="new-korean-word">
+            <input placeholder="Korean" type="text" id="new-word">
             <input placeholder="English" type="text" id="new-english-meaning">
             <button id="add-button">+</button>
         </div>
 
         <div id="vocab-list-holder">
-            <div id="card-groups">
+            <div id="unit-lists">
+                <div id="card-groups">
+                </div>
+                <button id="new-unit-button" onclick="toggleAddUnitModal()">+</button>
             </div>
             <div id="vocab-list"></div>
         </div>
     </div>
     <div id="card-container">
+        <div id="card-unit"></div>
         <button class="previous-next-buttons" id="back-button" style="grid-row: 1 / 11;
   grid-column: 1 / 2;">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -310,6 +362,10 @@
                     d="M6.776 1.553a.5.5 0 0 1 .671.223l3 6a.5.5 0 0 1 0 .448l-3 6a.5.5 0 1 1-.894-.448L9.44 8 6.553 2.224a.5.5 0 0 1 .223-.671" />
             </svg>
         </button>
+    </div>
+    <div id="add-unit-modal" class="hidden">
+        <input type="text" placeholder="Unit Name" id="new-unit-value">
+        <button onclick="createNewUnit()">Confirm</button>
     </div>
 </body>
 <script>
@@ -707,53 +763,59 @@
     };
     let currentNumber = 0;
     var dictionaryKeys = Object.keys(sampleDict);
-    let unitList = {
-        "unit 1": {
-            "장래 희망[히망] ": "Hopes for the future",
-            "가수": "Singer",
-            "경찰": "Police officer",
-            "과학자": "Scientist",
-            "모델": "Model"
+    let mainData = {
+        "Japanese": {},
+        "Korean": {
+            "unit 1": {
+                "장래 희망[히망] ": "Hopes for the future",
+                "가수": "Singer",
+                "경찰": "Police officer",
+                "과학자": "Scientist",
+                "모델": "Model"
+            },
+            "unit 2": {
+                "일기": "Diary",
+                "모이다": "To gather",
+                "수업": "Lesson",
+                "학원": "Academy",
+                "한국 무용": "Korean dance",
+                "무용가": "Dancer",
+                "연습하다": "To practice"
+            },
+            "unit 3": {
+                "만화책": "Comic book",
+                "주": "Week",
+                "초대해요": "To invite",
+                "같이": "Together",
+                "모습": "Figure",
+                "꼭": "Surely",
+                "작가": "Author"
+            },
+            "unit 4": {
+                "겨울": "Winter",
+                "용감해요": "To be brave",
+                "학년": "Grade",
+                "월요일": "Monday",
+                "화요일": "Tuesday",
+                "수요일": "Wednesday",
+                "목요일": "Thursday",
+                "금요일": "Friday",
+                "동아리": "Club"
+            },
+            "unit 5": {
+                "운동선수": "Athlete",
+                "소방관": "Fireman",
+                "수의사": "Veterinarian",
+                "화가": "Artist",
+                "봄": "Spring",
+                "여름": "Summer",
+                "가을": "Fall"
+            }
         },
-        "unit 2": {
-            "일기": "Diary",
-            "모이다": "To gather",
-            "수업": "Lesson",
-            "학원": "Academy",
-            "한국 무용": "Korean dance",
-            "무용가": "Dancer",
-            "연습하다": "To practice"
-        },
-        "unit 3": {
-            "만화책": "Comic book",
-            "주": "Week",
-            "초대해요": "To invite",
-            "같이": "Together",
-            "모습": "Figure",
-            "꼭": "Surely",
-            "작가": "Author"
-        },
-        "unit 4": {
-            "겨울": "Winter",
-            "용감해요": "To be brave",
-            "학년": "Grade",
-            "월요일": "Monday",
-            "화요일": "Tuesday",
-            "수요일": "Wednesday",
-            "목요일": "Thursday",
-            "금요일": "Friday",
-            "동아리": "Club"
-        },
-        "unit 5": {
-            "운동선수": "Athlete",
-            "소방관": "Fireman",
-            "수의사": "Veterinarian",
-            "화가": "Artist",
-            "봄": "Spring",
-            "여름": "Summer",
-            "가을": "Fall"
-        }
+        "Chinese": {}
     };
+
+    unitList = {};
     showFront = true;
     selectedUnit = '';
     flipButton.addEventListener('click', flipCard);
@@ -766,6 +828,20 @@
     restartButton.addEventListener('click', restart);
     addButton.addEventListener('click', addWord);
     saveButton.addEventListener('click', saveData);
+
+    function initLanguages() {
+        let languageHolderDiv = document.getElementById('languages');
+        for (let language of Object.keys(mainData)) {
+            let languageButton = document.createElement('button');
+            languageButton.classList.add('language-button');
+            languageButton.innerText = language;
+            languageButton.addEventListener('click', function() {
+                loadLanguage(language);
+                console.log(language)
+            });
+            languageHolderDiv.appendChild(languageButton);
+        }
+    }
 
     function makeList(newList) {
         let newDict = {};
@@ -827,7 +903,7 @@
         createCard();
     }
     function addWord() {
-        let koreanWord = document.getElementById('new-korean-word');
+        let koreanWord = document.getElementById('new-word');
         let englishWord = document.getElementById('new-english-meaning');
         if (koreanWord.value !== '' && englishWord.value !== '') {
             unitList[selectedUnit][koreanWord.value] = englishWord.value;
@@ -844,6 +920,7 @@
     function saveData() {
         console.log(sampleDict);
         console.log(unitList)
+        console.log(mainData)
     }
     function createHtmlList(word) {
         let vocabListHolder = document.getElementById('vocab-list');
@@ -869,17 +946,6 @@
 
     }
     function updateVocabList() {
-        let cardGroups = document.getElementById('card-groups');
-        let unitListKey = Object.keys(unitList);
-        for (let unit of unitListKey) {
-            unitHtml = document.createElement('div');
-            unitHtml.classList.add('card');
-            unitHtml.innerText = unit;
-            unitHtml.addEventListener('click', function () {
-                loadUnit(unit);
-            });
-            cardGroups.append(unitHtml);
-        }
         document.getElementById('vocab-list').innerHTML = '';
         for (let word of Object.keys(sampleDict)) {
             createHtmlList(word);
@@ -887,7 +953,7 @@
     }
     function deleteWord(wordKey, tableRow) {
         tableRow.remove();
-        delete sampleDict[wordKey];
+        delete unitList[selectedUnit][wordKey];
         dictionaryKeys = dictionaryKeys.filter(e => e !== wordKey);
         console.log(sampleDict)
 
@@ -897,12 +963,61 @@
         sampleDict = JSON.parse(JSON.stringify(unitList[unit]));
         unitList[unit] = sampleDict;
         selectedUnit = unit;
+        document.getElementById('card-unit').innerText = unit;
         updateVocabList();
         restart();
     }
-    updateVocabList();
-    loadUnit('unit 1');
-    createCard();
+
+    function loadLanguage(language) {
+        unitList = mainData[language];
+        console.log(unitList);
+        document.getElementById('new-word').setAttribute('placeholder', language);
+        let cardGroups = document.getElementById('card-groups');
+        cardGroups.innerHTML = '';
+        if (unitList['unit 1'] === undefined) {
+            unitList['unit 1'] = {};
+        }
+        let unitListKey = Object.keys(unitList);
+        for (let unit of unitListKey) {
+            createUnitDiv(unit, cardGroups)
+        }
+        updateVocabList();
+        loadUnit('unit 1');
+        document.querySelector('.card').classList.toggle('active-unit');
+        createCard();
+    }
+
+    function toggleAddUnitModal() {
+        document.getElementById('add-unit-modal').classList.toggle('hidden');
+    }
+    function createNewUnit() {
+        document.getElementById('add-unit-modal').classList.toggle('hidden');
+        let newUnitValue = document.getElementById('new-unit-value').value;
+        console.log(newUnitValue);
+        unitList[newUnitValue] = {};
+        let cardGroups = document.getElementById('card-groups');
+        createUnitDiv(newUnitValue, cardGroups);
+        newUnitValue = '';
+    }
+
+    function createUnitDiv(unit, cardGroups) {
+        unitHtml = document.createElement('div');
+            unitHtml.classList.add('card');
+            unitHtml.innerText = unit;
+            unitHtml.addEventListener('click', function () {
+                console.log(this)
+                if (document.querySelector('.active-unit') !== null) {
+                    document.querySelector('.active-unit').classList.toggle('active-unit');
+                }
+                this.classList.toggle('active-unit');
+                loadUnit(unit);
+            });
+            cardGroups.append(unitHtml);
+    }
+    // updateVocabList();
+    // loadUnit('unit 1');
+    // createCard();
+    initLanguages();
 </script>
 
 </html>
