@@ -11,11 +11,16 @@
             --button-hover-indent: 4px;
 
             --button-active-indent: 10px;
+            --main-div-background: #e2ffecb5;
+            --main-div-outline: #567a88;
+            --main-div-border-width: 3px;
+            --main-div-border-radius: 20px;
+            --main-font-color: #567a88;
 
         }
 
         body {
-            background-image: linear-gradient(to bottom right, #0e004d, #20023e);
+            background-image: linear-gradient(to bottom right, #E6A5C3, #74E4FF, #99D6C6);
 
             margin: 0;
 
@@ -29,13 +34,13 @@
 
             grid-template-rows: repeat(3, 1fr);
             height: 100%;
-            color: white;
+            color: var(--main-font-color);
 
         }
 
         #grid-body {
-            background-size: 50px 50px;
-            background-image: linear-gradient(to right, #f5f5dc4a 1px, transparent 1px), linear-gradient(to bottom, #f5f5dc2e 1px, transparent 1px);
+            background-size: 60px 60px;
+            background-image: linear-gradient(to right, #ffffff8f 1px, transparent 1px), linear-gradient(to bottom, #ffffff8f 1px, transparent 1px);
             width: 100%;
             height: 100%;
             position: absolute;
@@ -45,10 +50,10 @@
         #card-container {
             width: 100%;
             height: 350px;
-            background-color: #21185e;
-            border: 1px solid beige;
+            background-color: var(--main-div-background);
+            border: var(--main-div-border-width) solid var(--main-div-outline);
             text-align: center;
-            border-radius: 20px;
+            border-radius: var(--main-div-border-radius);
             margin-left: auto;
             margin-right: auto;
             grid-column: 5 / 9;
@@ -94,7 +99,7 @@
 
         .button-holder button:active {
             /* background-color: #0ac6c9;
- */
+*/
             transform: translateY(var(--button-active-indent));
 
             box-shadow: #0ac6c9 0px calc(var(--button-height) - var(--button-active-indent)) 0px 0px;
@@ -147,6 +152,17 @@
             }
         }
 
+        #collapse-button {
+            width: 0.75em;
+            height: 0.75em;
+            background: aquamarine;
+            grid-row: 1 / 2;
+            grid-column: 1 / 2;
+            margin: 0.25em 0 0 0.25em;
+            cursor: pointer;
+            z-index: 1;
+        }
+
         #action-buttons-holder {
             grid-column: 1 / 4;
             grid-row: 1 / 4;
@@ -154,10 +170,23 @@
             display: grid;
             grid-template-rows: repeat(10, 1fr);
             height: 100%;
+
+            #languages {
+                display: flex;
+                grid-row: 2 / 3;
+                grid-column: 2 / 10;
+
+                .language-button {
+                    padding: 0 1em;
+                    width: auto;
+                    height: 3em;
+                    margin-right: 1em;
+                }
+            }
         }
 
         #new-card-container {
-            grid-row: 2 / 3;
+            grid-row: 3 / 4;
             grid-column: 2 / 10;
             display: flex;
             justify-content: space-between;
@@ -175,15 +204,16 @@
         }
 
         input {
-                height: 2em;
-                font-size: 15pt;
-                margin-bottom: 1em;
-                border-radius: 13px;
-                border: none;
-                padding: 15px;
-                width: 100%;
+            height: 2em;
+            font-size: 15pt;
+            margin-bottom: 1em;
+            border-radius: 13px;
+            border: none;
+            padding: 15px;
+            width: 100%;
 
         }
+
         #action-buttons-holder button {
             height: 3em;
             width: 3em;
@@ -194,10 +224,9 @@
         }
 
         #vocab-list-holder {
-            grid-row: 3 / 11;
+            grid-row: 4 / 10;
             grid-column: 2 / 10;
             font-size: 14pt;
-            margin: 1em 0;
             height: calc(100% - 2em);
         }
 
@@ -205,10 +234,10 @@
             height: calc(100% - 4em);
             overflow: auto;
             padding: 1em;
-            background-color: #21185e;
+            background-color: var(--main-div-background);
             border-bottom-left-radius: 15px;
             border-bottom-right-radius: 15px;
-            border: 1px solid beige;
+            border: 2px solid var(--main-div-outline);
 
             button {
                 background: none;
@@ -241,8 +270,8 @@
 
         #save-button {
             margin-top: 1em;
-            grid-row: 1 / 2;
-            grid-column: 2 / 11;
+            grid-row: 10 / 11;
+            grid-column: 9 / 11;
         }
 
         #card-groups {
@@ -254,20 +283,21 @@
             .card {
                 border-top-left-radius: 15px;
                 border-top-right-radius: 15px;
-                background-color: #21185e;
+                background-color: var(--main-div-background);
                 padding: 0 1em;
                 line-height: 2em;
                 border-bottom: #beccd2 solid 1px;
                 border-right: #beccd2 solid 1px;
                 cursor: pointer;
                 white-space: nowrap;
-                border: 1px solid beige;
-                
+                border: 2px solid var(--main-div-outline);
+
             }
 
             .active-unit {
-            background-color: #0ac6c9 !important;
+                background-color: #0ac6c9 !important;
             }
+
             .card:hover {
                 background-color: #b0ddf0;
             }
@@ -283,12 +313,25 @@
             width: 100%;
             grid-row: 1 / 2;
             grid-column: 1 / 11;
-            border-top-left-radius: 18px;
-            border-top-right-radius: 18px;
-            border: 1px solid white;
-            color: #21185e;
-            font-size: 18pt;
+            border-top-left-radius: calc(var(--main-div-border-radius) - var(--main-div-border-width));
+            border-top-right-radius: calc(var(--main-div-border-radius) - var(--main-div-border-width));
+            /* border: 2px solid white; */
+            color: var(--main-font-color);
+            font-size: 14pt;
             text-transform: capitalize;
+            line-height: 2em;
+        }
+
+        #add-unit-modal {
+            width: 8em;
+            position: absolute;
+            padding: 2em;
+            background: var(--main-div-background);
+            top: calc(50% - 8em);
+            height: 4em;
+            left: calc(50% - 6em);
+            border: 2px solid var(--main-div-outline);
+            border-radius: var(--main-div-border-radius);
         }
 
         @media only screen and (max-width: 1300px) {
@@ -305,6 +348,7 @@
 
 <body>
     <div id="grid-body"></div>
+    <div id="collapse-button" onclick="toggleActionContainer()"></div>
     <div id="action-buttons-holder">
         <div id="languages"></div>
         <button id="save-button">Save</button>
@@ -364,6 +408,7 @@
         </button>
     </div>
     <div id="add-unit-modal" class="hidden">
+        <label for="new-unit-value">Unit Name</label>
         <input type="text" placeholder="Unit Name" id="new-unit-value">
         <button onclick="createNewUnit()">Confirm</button>
     </div>
@@ -764,7 +809,6 @@
     let currentNumber = 0;
     var dictionaryKeys = Object.keys(sampleDict);
     let mainData = {
-        "Japanese": {},
         "Korean": {
             "unit 1": {
                 "장래 희망[히망] ": "Hopes for the future",
@@ -812,7 +856,8 @@
                 "가을": "Fall"
             }
         },
-        "Chinese": {}
+        "Chinese": {},
+        "Japanese": {}
     };
 
     unitList = {};
@@ -835,7 +880,7 @@
             let languageButton = document.createElement('button');
             languageButton.classList.add('language-button');
             languageButton.innerText = language;
-            languageButton.addEventListener('click', function() {
+            languageButton.addEventListener('click', function () {
                 loadLanguage(language);
                 console.log(language)
             });
@@ -1002,21 +1047,29 @@
 
     function createUnitDiv(unit, cardGroups) {
         unitHtml = document.createElement('div');
-            unitHtml.classList.add('card');
-            unitHtml.innerText = unit;
-            unitHtml.addEventListener('click', function () {
-                console.log(this)
-                if (document.querySelector('.active-unit') !== null) {
-                    document.querySelector('.active-unit').classList.toggle('active-unit');
-                }
-                this.classList.toggle('active-unit');
-                loadUnit(unit);
-            });
-            cardGroups.append(unitHtml);
+        unitHtml.classList.add('card');
+        unitHtml.innerText = unit;
+        unitHtml.addEventListener('click', function () {
+            console.log(this)
+            if (document.querySelector('.active-unit') !== null) {
+                document.querySelector('.active-unit').classList.toggle('active-unit');
+            }
+            this.classList.toggle('active-unit');
+            loadUnit(unit);
+        });
+        cardGroups.append(unitHtml);
     }
     // updateVocabList();
     // loadUnit('unit 1');
     // createCard();
+    function toggleActionContainer() {
+        document.getElementById('action-buttons-holder').classList.toggle('hidden');
+        if (document.getElementById('action-buttons-holder').classList.contains('hidden') === true) {
+            document.getElementById('card-container').style.gridColumn = '4 / 10';
+        } else {
+            document.getElementById('card-container').style.gridColumn = '6 / 12';
+        }
+    }
     initLanguages();
 </script>
 
