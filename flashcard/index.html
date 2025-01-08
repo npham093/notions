@@ -359,6 +359,9 @@
         </div>
 
         <div id="vocab-list-holder">
+            <div id="level-list">
+                <button id="new-unit-button" onclick="toggleAddLevelModal()">+</button>
+            </div>
             <div id="unit-lists">
                 <div id="card-groups">
                 </div>
@@ -810,50 +813,592 @@
     var dictionaryKeys = Object.keys(sampleDict);
     let mainData = {
         "Korean": {
-            "unit 1": {
-                "장래 희망[히망] ": "Hopes for the future",
-                "가수": "Singer",
-                "경찰": "Police officer",
-                "과학자": "Scientist",
-                "모델": "Model"
+            "Level 1": {
+                "Unit 11": {
+                    "안녕하세요": "Hello",
+                    "안녕히 가세요 ": "Good-bye (go well: you can say to someone who leaves)",
+                    "안녕히 계세요": "Good-bye (stay well: you can say to someone who stays)",
+                    "이름": "Name",
+                    "뭐(=무엇) ": "What",
+                    "예요/이에요": "Am/is/are",
+                    "저는": "I + topic marker",
+                },
+                "Unit 12": {
+                    "책상": "Desk",
+                    "시계": "Clock",
+                    "연필": "Pencil",
+                    "의자": "Chair",
+                    "가방": "Bag",
+                    "책": "Book",
+                    "칠판": "Blackboard",
+                    "지우개": "Eraser",
+                    "공책": "Notebook",
+                },
+                "Unit 13": {
+                    "사과": "Apple",
+                    "우유": "Milk",
+                    "곰": "Bear",
+                    "딸기": "Strawberry",
+                    "주스": "Juice",
+                    "사자": "Lion",
+                    "빵": "Bread",
+                    "강아지": "Puppy",
+                    "고양이": "Cat",
+                },
+                "Unit 14": {
+                    "학교": "School",
+                    "집": "House",
+                    "공원": "Park",
+                    "수영장": "Swimming pool",
+                    "교실": "Classroom",
+                    "동물원": "Zoo",
+                },
+                "Unit 15": {
+                    "방": "Room",
+                    "거실": "Living room",
+                    "침대": "Bed",
+                    "피아노": "Piano",
+                    "컴퓨터": "Computer",
+                    "텔레비전/티비": "Television/TV",
+                },
+                "Unit 16": {
+                    "있어요": "There is",
+                    "없어요": "There is not",
+                    "부엌": "Kitchen",
+                    "놀이터": "Playground",
+                    "식탁": "Dining table",
+                    "시소": "Seesaw",
+                    "냉장고": "Refrigerator",
+                    "그네": "Swing",
+                }
             },
-            "unit 2": {
-                "일기": "Diary",
-                "모이다": "To gather",
-                "수업": "Lesson",
-                "학원": "Academy",
-                "한국 무용": "Korean dance",
-                "무용가": "Dancer",
-                "연습하다": "To practice"
+            "Level 2": {
+                "Unit 1": {
+                    "한국": "Korea",
+                    "미국": "the United States",
+                    "일본": "Japan",
+                    "중국": "China",
+                    "영국": "the United Kingdom ",
+                },
+                "Unit 2": {
+                    "할아버지": "Grandfather",
+                    "할머니": "Grandmother",
+                    "아빠": "Dad",
+                    "엄마": "Mom",
+                    "여동생": "Younger Sister",
+                    "남동생": "Younger brother",
+                },
+                "Unit 3": {
+                    "회사": "Company",
+                    "백화점": "Department Store",
+                    "유치원": "Kindergarten",
+                    "병원": "Hospital",
+                    "약국": "Pharmacy",
+                    "슈퍼마켓/슈퍼": "Supermarket",
+                    "가요": "to go",
+                    "와요": "to come",
+                },
+                "Unit 4": {
+                    "신문": "Newspaper",
+                    "주스": "Juice",
+                    "마셔요": "to drink",
+                    "그림": "picture",
+                    "읽어요": "to read",
+                    "먹어요": "to eat",
+                    "우유": "Milk",
+                    "봐요": "to watch/see",
+                    "그려요": "to draw/paint",
+                },
+                "Unit 5": {
+                    "좋아요[조아요]": "to like, be good",
+                    "싫어요[시러요]": "to not like, to hate",
+                    "아이스크림": "Ice cream",
+                    "사탕": "Candy",
+                    "과자": "Snack",
+                    "만두": "Dumpling",
+                    "피자": "Pizza",
+                    "스파게티": "Spaghetti",
+                },
+                "Unit 6": {
+                    "좋아해요": "to like",
+                    "싫어해요": "to not like, to hate",
+                    "불고기": "bulgogi",
+                    "김치": "kimchi",
+                    "밥": "rice/meal",
+                    "빵": "bread",
+                    "우유": "milk",
+                    "주스": "juice",
+                },
+                "Unit 7": {
+                    "노래해요": "To sing",
+                    "수영해요": "To swim",
+                    "운동해요": "To exercise",
+                    "축구해요": "To play soccer",
+                    "전화해요": "To call/be on the phone",
+                    "공부해요": "To study",
+                },
+                "Unit 8": {
+                    "아침": "Morning",
+                    "저녁": "Evening",
+                    "어제": "Yesterday",
+                    "오늘": "Today",
+                    "내일": "Tomorrow",
+                    "지금": "Now",
+                    "산": "Mountain",
+                    "바다": "Sea",
+                },
+                "Unit 9": {
+                    "장난감": "Toy",
+                    "기차": "Train",
+                    "비행기": "Plane",
+                    "자동차/차": "Car",
+                    "인형": "Doll",
+                    "곰": "Bear",
+                    "토끼": "Rabbit",
+                    "강아지": "Puppy",
+                    "있어요": "To have",
+                    "없어요": "To not have",
+                },
+                "Unit 10": {
+                    "동화책": "Fairy tale book",
+                    "필통": "Pencil case",
+                    "우산": "Umbrella",
+                    "신발": "Shoes",
+                    "옷": "Clothes",
+                    "가위": "Scissors",
+                },
+                "Unit 11": {
+                    "치마": "Skirt",
+                    "바지": "Pants",
+                    "운동화": "Sneakers",
+                    "구두": "Dress shoes",
+                    "안경": "Glasses",
+                    "양말": "Socks",
+                    "모자": "Hat/cap",
+                },
+                "Unit 12": {
+                    "미끄럼틀": "Slide",
+                    "자전거": "Bicycle",
+                    "타요": "To ride",
+                    "사요": "to buy",
+                },
+                "Unit 13": {
+                    "일": "1 (Sino-Korean number)",
+                    "이": "2 (Sino-Korean number)",
+                    "삼": "3 (Sino-Korean number)",
+                    "사": "4 (Sino-Korean number)",
+                    "오": "5 (Sino-Korean number)",
+                    "육": "6 (Sino-Korean number)",
+                    "칠": "7 (Sino-Korean number)",
+                    "팔": "8 (Sino-Korean number)",
+                    "구": "9 (Sino-Korean number)",
+                    "십": "10 (Sino-Korean number)",
+                    "십오": "15 (Sino-Korean number)",
+                    "삼십": "30 (Sino-Korean number)",
+                },
+                "Unit 14": {
+                    "하나": "1 (Pure-Korean number)",
+                    "둘": "2 (Pure-Korean number)",
+                    "셋": "3 (Pure-Korean number)",
+                    "넷": "4 (Pure-Korean number)",
+                    "다섯": "5 (Pure-Korean number)",
+                    "여섯": "6 (Pure-Korean number)",
+                    "일곱": "7 (Pure-Korean number)",
+                    "여덟": "8 (Pure-Korean number)",
+                    "아홉": "9 (Pure-Korean number)",
+                    "열": "10 (Pure-Korean number)",
+                    "스물": "20 (Pure-Korean number)",
+                    "서른": "30 (Pure-Korean number)",
+                    "마흔": "40 (Pure-Korean number)",
+                    "쉰": "50 (Pure-Korean number)",
+                },
+                "Unit 15": {
+                    "사랑해요": "To love",
+                    "행복해요": "Be happy",
+                    "가족": "Family",
+                },
+                "Unit 16": {
+                    "고맙습니다/감사합니다": "Thank you",
+                    "죄송합니다": "I'm sorry",
+                    "축하합니다": "Congratulations",
+                    "잘 먹겠습니다": "I'll eat well. (The greeting expression before a meal)",
+                    "잘 먹었습니다": "I ate well. (The greeting expression after a meal)",
+                }
             },
-            "unit 3": {
-                "만화책": "Comic book",
-                "주": "Week",
-                "초대해요": "To invite",
-                "같이": "Together",
-                "모습": "Figure",
-                "꼭": "Surely",
-                "작가": "Author"
+            "Level 3": {
+                "Unit 1": {
+                    "아버지": "Father",
+                    "어머니": "Mother",
+                    "외할아버지": "Maternal grandfather",
+                    "외할머니": "Maternal grandmother",
+                    "형 / 오빠": "Older brother (for males/females)",
+                    "누나 / 언니": "Older sister (for males/females)",
+                    "사람": "Person",
+                    "명": "People counter",
+                    "분": "Honorific form of people counter",
+                    "마리": "Animal counter",
+                },
+                "Unit 2": {
+                    "무늬[무니]": "Pattern",
+                    "싫어해요": "To dislike",
+                    "좋아해요": "To like",
+                    "귀여워요": "Be cute",
+                    "짧아요": "Be short",
+                    "길어요": "Be long",
+                    "깨끗해요 [깨끄태요]": "Be clean",
+                    "더러워요": "Be dirty",
+                    "똑똑해요": "Be smart",
+                    "예뻐요": "Be pretty",
+                    "재미있어요": "Be fun",
+                    "작아요": "Be small",
+                    "커요": "Be big",
+                    "나뭇잎[나문닢]": "Leaf"
+                },
+                "Unit 3": {
+                    "눈": "Eye",
+                    "소개해요": "To introduce",
+                    "만나요": "To meet",
+                    "애완동물": "Pet",
+                    "과일": "Fruit",
+                    "콩": "Bean"
+                },
+                "Unit 4": {
+                    "공원": "Park",
+                    "음악회/콘서트": "Concert",
+                    "주말": "Weekend",
+                    "걸어요": "To walk",
+                    "들어요": "To listen",
+                    "숙제해요": "To do homework",
+                    "식사해요": "To have a meal",
+                    "배워요": "To learn",
+                    "쉬어요": "To rest",
+                    "자주": "Often",
+                    "동화책": "Fairy tale book",
+                    "이번": "This time",
+                    "요즘": "These days",
+                },
+                "Unit 5": {
+                    "취미": "Hobby",
+                    "물고기/생선": "Fish",
+                    "악기": "Musical instruments",
+                    "야구": "Baseball",
+                    "농구": "Basketball",
+                    "영화": "Movie",
+                    "축구": "Soccer",
+                    "길러요(기르다)": "To raise",
+                    "달려요(달리다) ": "To run",
+                    "연주해요": "To play (instruments)",
+                    "쳐요(치다)": "To hit, play (the piano, drum, badminton...)",
+                    "청소해요": "To clean",
+                    "혼자": "Alone",
+                    "만들다": "To make"
+                },
+                "Unit 6": {
+                    "정말": "Really",
+                    "생활": "Life",
+                    "놀아요": "To play, hang out",
+                    "요리하다": "To cook",
+                    "일어나다": "To wake up",
+                    "잠을 자다": "To sleep",
+                },
+                "Unit 7": {
+                    "그리고": "And",
+                    "과목": "Subject",
+                    "과학": "Science",
+                    "미술": "Art",
+                    "사회": "Society",
+                    "수학": "Mathematics",
+                    "영어": "English",
+                    "음악실": "Music",
+                    "체육": "Physical Education",
+                    "한국어": "Korean",
+                    "오전/오후": "A.M./P.M.",
+                    "시간표": "Timetable"
+                },
+                "Unit 8": {
+                    "하지만": "But",
+                    "과학관": "Science museum",
+                    "도서관": "Library",
+                    "미술관": "Art museum",
+                    "박물관": "Museum",
+                    "영화관": "Movie theater",
+                    "헬스장/체육관": "Gym",
+                    "토요일": "Saturday",
+                    "일요일": "Sunday",
+                    "닫아요": "To close",
+                    "열어요": "To open",
+                    "가끔": "Sometimes",
+                    "너무": "Too (much of something)",
+                    "멀다": "Be far",
+                    "바쁘다": "Be busy",
+                    "운동복": "Sportswear",
+                    "종이": "Paper"
+                },
+                "Unit 9": {
+                    "붓": "Brush",
+                    "글씨": "Letter",
+                    "붓글씨": "Calligraphy",
+                    "전통": "Tradition",
+                    "춤": "Dance",
+                    "춤을 추다": "To dance",
+                    "놀이": "Game",
+                    "발표하다": "To present",
+                    "발표회": "Presentation",
+                    "강당": "Hall",
+                    "지도": "Map"
+                },
+                "Unit 10": {
+                    "그러면": "Then",
+                    "위": "Above/up",
+                    "밑/아래": "Below/down",
+                    "앞": "Front",
+                    "뒤": "Behind/back",
+                    "옆": "Next/beside",
+                    "사이": "Between",
+                    "건물": "Building",
+                    "과학실": "Science room",
+                    "미술실": "Art room",
+                    "음악실": "Music",
+                    "은행": "Bank",
+                    "생일": "Birthday",
+                    "거기": "Over there"
+                },
+                "Unit 11": {
+                    "안": "Inside",
+                    "밖": "Outside",
+                    "오른쪽": "right",
+                    "왼쪽": "left",
+                    "근처": "Near",
+                    "똑바로": "Straight",
+                    "정류장": "Station",
+                    "층": "Floor",
+                    "횡단보도": "Crosswalk",
+                    "건너다": "to cross",
+                    "사요": "to buy",
+                    "팔아요": "to sell",
+                    "꽃집": "Flower shop"
+                },
+                "Unit 12": {
+                    "동네": "Neighborhood/town",
+                    "많다": "be a lot",
+                    "빵집": "Bakery",
+                    "옷가게": "Clothing store",
+                    "서점": "Bookstore",
+                    "놀이공원": "Amusement park",
+                    "풍선": "Balloon",
+                    "솜사탕": "Cotton candy",
+                    "마술": "Magic",
+                    "공연": "Performance",
+                    "공연장": "Performance hall",
+                    "벌써": "Already",
+                    "시작하다": "to start",
+                    "사랑": "Love",
+                    "동물": "Animal",
+                    "동물원": "Zoo",
+                    "아프다": "be sick",
+                    "입구": "Entrance",
+                    "가깝다": "be close",
+                },
+                "Unit 13": {
+                    "귤": "tangerine",
+                    "기념품": "souvenir",
+                    "부채": "handy fan",
+                    "선물": "present",
+                    "여행": "travel",
+                    "골라요(고르다)": "to select/pick",
+                    "선물해요": "to give (a gift)",
+                    "더워요(덥다)": "be hot",
+                    "매워요(맵다)": "be spicy",
+                    "아름다워요(아름답다)": "be beautiful",
+                    "추워요(춥다)": "be cold",
+                },
+                "Unit 14": {
+                    "그래서": "So",
+                    "국립 공원[궁립 공원]": "National park",
+                    "경치": "Scenery",
+                    "블로그": "Blog",
+                    "생일": "Birthday",
+                    "일기": "Diary",
+                    "해변/바닷가": "Beach",
+                    "해산물": "Seafood",
+                    "휴가": "Vacation",
+                    "방학": "School vacation",
+                    "N 때": "When N",
+                    "정말": "Really",
+                    "사진을 찍다": "to take a picture",
+                    "모래": "Sand",
+                },
+                "Unit 15": {
+                    "구경하다": "to look around/browse/sightsee",
+                    "많다": "be a lot",
+                    "필통": "Pencil case",
+                    "전망대": "Observatory",
+                    "시내": "Downtown",
+                    "유람선": "Cruise ship",
+                    "정원": "Garden",
+                    "연": "Pond",
+                    "옛날 물건": "Old stuff",
+                    "왕": "King",
+                    "왕비": "Queen ",
+                },
+                "Unit 16": {
+                    "음악회/연주회": "Concert",
+                    "연주": "Performance",
+                    "매일": "Everyday",
+                    "연습하다": "to practice",
+                    "축구 경기": "Soccer game",
+                    "지난": "Last",
+                    "문화": "Culture",
+                    "유명하다": "be famous",
+                    "댓글": "Comments",
+                    "산책하다": "to go for a walk",
+                }
             },
-            "unit 4": {
-                "겨울": "Winter",
-                "용감해요": "To be brave",
-                "학년": "Grade",
-                "월요일": "Monday",
-                "화요일": "Tuesday",
-                "수요일": "Wednesday",
-                "목요일": "Thursday",
-                "금요일": "Friday",
-                "동아리": "Club"
-            },
-            "unit 5": {
-                "운동선수": "Athlete",
-                "소방관": "Fireman",
-                "수의사": "Veterinarian",
-                "화가": "Artist",
-                "봄": "Spring",
-                "여름": "Summer",
-                "가을": "Fall"
+            "Level 4": {
+                "Unit 1": {
+                    "장래 희망[히망]": "Hopes for the future",
+                    "가수": "Singer",
+                    "경찰": "Police officer",
+                    "과학자": "Scientist",
+                    "모델": "Model",
+                    "운동선수": "Athlete",
+                    "소방관": "Fireman",
+                    "수의사": "Veterinarian",
+                    "화가": "Artist",
+                    "봄": "Spring",
+                    "여름": "Summer",
+                    "가을": "Fall",
+                    "겨울": "Winter",
+                    "용감해요": "To be brave",
+                    "학년": "Grade"
+                },
+                "Unit 2": {
+                    "월요일": "Monday",
+                    "화요일": "Tuesday",
+                    "수요일": "Wednesday",
+                    "목요일": "Thursday",
+                    "금요일": "Friday",
+                    "동아리": "Club",
+                    "만화책": "Comic book",
+                    "주": "Week",
+                    "초대해요": "To invite",
+                    "같이": "Together",
+                    "모습": "Figure",
+                    "꼭": "Surely",
+                    "작가": "Author",
+                    "일기": "Diary",
+                    "모이다": "To gather"
+                },
+                "Unit 3": {
+                    "수업": "Lesson",
+                    "학원": "Academy",
+                    "한국 무용": "Korean dance",
+                    "무용가": "Dancer",
+                    "연습하다": "To practice"
+                },
+                "Unit 4": {
+                    "공연": "Performance",
+                    "문화 센터": "Culture center",
+                    "연극": "Play",
+                    "프로그램": "Program",
+                    "일 분": "One minute",
+                    "한 시": "One o'clock",
+                    "한 시간": "One hour",
+                    "일주일": "One week",
+                    "한 달": "One month",
+                    "일 년": "One year",
+                    "시작해요": "To begin",
+                    "끝나요": "To end",
+                },
+                "Unit 5": {
+                    "공룡": "Dinosaur",
+                    "놀이 기구": "Ride",
+                    "대회": "Contest",
+                    "던져요": "To throw",
+                    "문화": "Culture",
+                    "잡아요": "To catch",
+                    "전시회": "Fair/exhibition",
+                    "축제": "Festival",
+                    "타요": "To ride",
+                    "행사": "Event",
+                    "오래": "Long"
+                },
+                "Unit 6": {
+                    "멋지다": "Be cool",
+                    "작품": "Artwork",
+                    "그리다": "To draw",
+                    "색칠하다": "To paint",
+                    "체험": "Experience/event",
+                    "질문": "Question",
+                    "구경하다": "To see/browse",
+                    "우주": "Universe",
+                },
+                "Unit 7": {
+                    "모자": "Cap/hat",
+                    "바자회": "Bazaar",
+                    "수영복": "Swimming suit",
+                    "원": "Won",
+                    "십": "Ten",
+                    "백": "Hundred",
+                    "천": "Thousand",
+                    "만": "Ten thousand",
+                    "떠들어요": "To make noise",
+                    "뛰어요": "To run",
+                    "새": "New",
+                    "비싸요": "Expensive",
+                    "싸요": "Cheap",
+                    "축제": "Festival",
+                },
+                "Unit 8": {
+                    "유월": "June",
+                    "시월": "October",
+                    "다치다": "To hurt",
+                    "며칠": "What date",
+                    "춤을 추다": "To dance",
+                    "경기": "(Sport) game"
+                },
+                "Unit 9": {
+                    "졸업하다": "To graduate",
+                    "졸업식": "Graduation ceremony",
+                    "다치다": "Get hurt",
+                    "한복": "Korean traditional clothes",
+                    "세뱃돈": "New Year's cash gifts",
+                    "시험": "Exam",
+                    "결혼기념일": "Wedding anniversary",
+                    "입장권": "Entrance ticket",
+                    "표": "Ticket",
+                    "미끄럽다": "Slippery",
+                    "쓰레기통": "Trash can",
+                    "편지": "Letter"
+                },
+                "Unit 10": {
+                    "날씨": "Weather",
+                    "일기 예보": "Weather forecast",
+                    "태풍": "Typhoon",
+                    "눈이 와요": "To snow",
+                    "비가 와요": "To rain",
+                    "지나가요": "To pass",
+                    "따뜻해요": "Be warm",
+                    "맑아요": "Be clear/sunny",
+                    "흐려요": "Be cloudy",
+                    "세게": "Strongly",
+                    "아직": "Yet",
+                    "조금": "A little",
+                    "계속": "Keep -ing",
+                },
+                "Unit 11": {
+                    "늦잠": "Oversleeping",
+                    "문자 메시지": "Text message",
+                    "시합": "Match/game",
+                    "우산": "Umbrella",
+                    "출발": "Departure",
+                    "후식/디저트": "Dessert",
+                    "물놀이": "Water play",
+                    "늦어요": "Be late",
+                    "지난번": "Last time",
+                    "작년": "Last year",
+                    "내년": "Next year",
+                }
             }
         },
         "Chinese": {},
@@ -877,6 +1422,7 @@
     function initLanguages() {
         let languageHolderDiv = document.getElementById('languages');
         for (let language of Object.keys(mainData)) {
+            console.log(language)
             let languageButton = document.createElement('button');
             languageButton.classList.add('language-button');
             languageButton.innerText = language;
@@ -1014,24 +1560,43 @@
     }
 
     function loadLanguage(language) {
-        unitList = mainData[language];
-        console.log(unitList);
+        levelList = mainData[language];
+        let levelListDiv = document.getElementById('level-list');
         document.getElementById('new-word').setAttribute('placeholder', language);
+        levelListDiv.innerHTML = "";
+        if (levelList['Level 1'] === undefined) {
+            levelList['Level 1'] = {};
+        }
+        for (let level of Object.keys(levelList)) {
+            let newLevelDiv = document.createElement('button');
+            newLevelDiv.innerText = level;
+            newLevelDiv.addEventListener('click', function() {
+                initalizeUnits(language, level);
+            })
+            levelListDiv.append(newLevelDiv)
+        }
+    }
+    function initalizeUnits(language, level) {
+        console.log()
+        unitList = mainData[language][level];
+        console.log(unitList);
         let cardGroups = document.getElementById('card-groups');
         cardGroups.innerHTML = '';
-        if (unitList['unit 1'] === undefined) {
-            unitList['unit 1'] = {};
+        if (unitList['Unit 1'] === undefined) {
+            unitList['Unit 1'] = {};
         }
         let unitListKey = Object.keys(unitList);
         for (let unit of unitListKey) {
             createUnitDiv(unit, cardGroups)
         }
         updateVocabList();
-        loadUnit('unit 1');
+        loadUnit('Unit 1');
         document.querySelector('.card').classList.toggle('active-unit');
         createCard();
     }
-
+    function toggleAddLevelModal() {
+        console.log('asdf')
+    }
     function toggleAddUnitModal() {
         document.getElementById('add-unit-modal').classList.toggle('hidden');
     }
