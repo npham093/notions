@@ -333,6 +333,23 @@
             border: 2px solid var(--main-div-outline);
             border-radius: var(--main-div-border-radius);
         }
+        #flip-deck-button {
+            padding: 0 1em;
+            width: 7em;
+            height: 3em;
+            margin-right: 0em;
+            margin-bottom: 2em;
+            margin-top: auto;
+            grid-row: 1/2;
+            grid-column: 11/12;  
+            font-size: 8pt;
+            border-radius: 12px;
+            border: 2px solid #0ac6c9;
+            background-color: #fbffff;
+            color: #805e5e;
+            cursor: pointer;
+            box-shadow: #0ac6c9 0px var(--button-height) 0px 0px;
+        }
 
         @media only screen and (max-width: 1300px) {
             #action-buttons-holder {
@@ -370,6 +387,7 @@
             <div id="vocab-list"></div>
         </div>
     </div>
+    <button id="flip-deck-button">Flip Deck</button>
     <div id="card-container">
         <div id="card-unit"></div>
         <button class="previous-next-buttons" id="back-button" style="grid-row: 1 / 11;
@@ -1407,8 +1425,10 @@
 
     unitList = {};
     showFront = true;
+    flippedCardDeck = false;
     selectedUnit = '';
     flipButton.addEventListener('click', flipCard);
+    document.getElementById('flip-deck-button').addEventListener('click', flipCardDeck);
     document.getElementById('main-text').addEventListener('click', flipCard);
 
     incorrectButton.addEventListener('click', incorrectCard);
@@ -1418,6 +1438,11 @@
     restartButton.addEventListener('click', restart);
     addButton.addEventListener('click', addWord);
     saveButton.addEventListener('click', saveData);
+
+    function flipCardDeck() {
+        flippedCardDeck = !flippedCardDeck;
+        flipCard();
+    }
 
     function initLanguages() {
         let languageHolderDiv = document.getElementById('languages');
@@ -1442,10 +1467,10 @@
         } return newDict;
     }
     function createCard() {
-        showFront = false;
+        showFront = flippedCardDeck;
         if (currentNumber >= dictionaryKeys.length) {
             currentNumber = 0;
-        } if (dictionaryKeys.length === 0) {
+        } else if (dictionaryKeys.length === 0) {
             mainText.innerText = 'Finished Review';
             restartButton.classList.toggle('hidden', false);
             incorrectButton.classList.toggle('hidden', true);
@@ -1458,12 +1483,14 @@
     function flipCard() {
         showFront = !showFront;
         if (showFront) {
+            console.log(dictionaryKeys)
             mainText.innerText = dictionaryKeys[currentNumber];
             incorrectButton.classList.toggle('hidden', true);
             nextButton.classList.toggle('hidden', true);
             restartButton.classList.toggle('hidden', true);
             flipButton.classList.toggle('hidden', false);
         } else {
+            console.warn(sampleDict)
             mainText.innerText = sampleDict[dictionaryKeys[currentNumber]];
             incorrectButton.classList.toggle('hidden');
             nextButton.classList.toggle('hidden');
@@ -1577,20 +1604,18 @@
         }
     }
     function initalizeUnits(language, level) {
-        console.log()
         unitList = mainData[language][level];
-        console.log(unitList);
         let cardGroups = document.getElementById('card-groups');
         cardGroups.innerHTML = '';
-        if (unitList['Unit 1'] === undefined) {
+        let unitListKey = Object.keys(unitList);
+        if (unitListKey.length === 0) {
             unitList['Unit 1'] = {};
         }
-        let unitListKey = Object.keys(unitList);
         for (let unit of unitListKey) {
             createUnitDiv(unit, cardGroups)
         }
         updateVocabList();
-        loadUnit('Unit 1');
+        loadUnit(unitListKey[0]);
         document.querySelector('.card').classList.toggle('active-unit');
         createCard();
     }
