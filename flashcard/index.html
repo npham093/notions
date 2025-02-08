@@ -322,7 +322,7 @@
             line-height: 2em;
         }
 
-        #add-unit-modal {
+        #add-unit-modal, #add-level-modal {
             width: 8em;
             position: absolute;
             padding: 2em;
@@ -350,6 +350,9 @@
             cursor: pointer;
             box-shadow: #0ac6c9 0px var(--button-height) 0px 0px;
         }
+        .level-list-container {
+            display: flex;
+        }
 
         @media only screen and (max-width: 1300px) {
             #action-buttons-holder {
@@ -376,7 +379,9 @@
         </div>
 
         <div id="vocab-list-holder">
-            <div id="level-list">
+            <div class="level-list-container">
+                <div id="level-list">
+                </div>
                 <button id="new-unit-button" onclick="toggleAddLevelModal()">+</button>
             </div>
             <div id="unit-lists">
@@ -432,6 +437,11 @@
         <label for="new-unit-value">Unit Name</label>
         <input type="text" placeholder="Unit Name" id="new-unit-value">
         <button onclick="createNewUnit()">Confirm</button>
+    </div>
+    <div id="add-level-modal" class="hidden">
+        <label for="new-level-value">Level Name</label>
+        <input type="text" placeholder="Level Name" id="new-level-value">
+        <button onclick="createNewLevel()">Confirm</button>
     </div>
 </body>
 <script>
@@ -1468,9 +1478,7 @@
     }
     function createCard() {
         showFront = flippedCardDeck;
-        if (currentNumber >= dictionaryKeys.length) {
-            currentNumber = 0;
-        } else if (dictionaryKeys.length === 0) {
+        if (dictionaryKeys.length === 0) {
             mainText.innerText = 'Finished Review';
             restartButton.classList.toggle('hidden', false);
             incorrectButton.classList.toggle('hidden', true);
@@ -1502,6 +1510,9 @@
     }
     function previousCard() {
         currentNumber--;
+        if (currentNumber < 0) {
+            currentNumber = dictionaryKeys.length - 1;
+        }
         createCard();
     }
     function nextCard() {
@@ -1511,6 +1522,9 @@
     }
     function nextCard2() {
         currentNumber++;
+        if (currentNumber >= dictionaryKeys.length) {
+            currentNumber = 0;
+        }
         createCard();
     }
     function restart() {
@@ -1620,19 +1634,33 @@
         createCard();
     }
     function toggleAddLevelModal() {
-        console.log('asdf')
+        document.getElementById('add-level-modal').classList.toggle('hidden');
     }
     function toggleAddUnitModal() {
         document.getElementById('add-unit-modal').classList.toggle('hidden');
     }
     function createNewUnit() {
         document.getElementById('add-unit-modal').classList.toggle('hidden');
-        let newUnitValue = document.getElementById('new-unit-value').value;
+        let newUnit = document.getElementById('new-unit-value');
+        let newUnitValue = newUnit.value;
         console.log(newUnitValue);
         unitList[newUnitValue] = {};
+        console.log(unitList)
         let cardGroups = document.getElementById('card-groups');
         createUnitDiv(newUnitValue, cardGroups);
-        newUnitValue = '';
+        newUnit.innerHTML = '';
+    }
+    function createNewLevel() {
+        document.getElementById('add-level-modal').classList.toggle('hidden');
+        let newLevel = document.getElementById('new-level-value');
+        let newLevelValue = newLevel.value;
+        console.log(newLevelValue);
+        levelList[newLevelValue] = {};
+        console.log(levelList)
+
+        let cardGroups = document.getElementById('level-list');
+        createLevelDiv(newLevelValue, cardGroups);
+        newLevel.innerHTML = '';
     }
 
     function createUnitDiv(unit, cardGroups) {
@@ -1648,6 +1676,15 @@
             loadUnit(unit);
         });
         cardGroups.append(unitHtml);
+    }
+    function createLevelDiv(level, cardGroups) {
+        levelHtml = document.createElement('button');
+        levelHtml.innerText = level;
+        levelHtml.addEventListener('click', function () {
+            console.log(this)
+            // initalizeUnits(language, level);
+        });
+        cardGroups.append(levelHtml);
     }
     // updateVocabList();
     // loadUnit('unit 1');
