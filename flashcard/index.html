@@ -322,7 +322,8 @@
             line-height: 2em;
         }
 
-        #add-unit-modal, #add-level-modal {
+        #add-unit-modal,
+        #add-level-modal {
             width: 8em;
             position: absolute;
             padding: 2em;
@@ -333,6 +334,7 @@
             border: 2px solid var(--main-div-outline);
             border-radius: var(--main-div-border-radius);
         }
+
         #flip-deck-button {
             padding: 0 1em;
             width: 7em;
@@ -341,7 +343,7 @@
             margin-bottom: 2em;
             margin-top: auto;
             grid-row: 1/2;
-            grid-column: 11/12;  
+            grid-column: 11/12;
             font-size: 8pt;
             border-radius: 12px;
             border: 2px solid #0ac6c9;
@@ -350,6 +352,7 @@
             cursor: pointer;
             box-shadow: #0ac6c9 0px var(--button-height) 0px 0px;
         }
+
         .level-list-container {
             display: flex;
         }
@@ -367,6 +370,14 @@
 </head>
 
 <body>
+    <aside style="visibility: hidden;">
+        배 안 고파요?
+        네, 배 안 고파요
+        아니요, 배고파요
+        낮잠을 자다
+
+        요리를 하다
+        음식을 만들다/하다</aside>
     <div id="grid-body"></div>
     <div id="collapse-button" onclick="toggleActionContainer()"></div>
     <div id="action-buttons-holder">
@@ -1426,6 +1437,84 @@
                     "지난번": "Last time",
                     "작년": "Last year",
                     "내년": "Next year",
+                },
+                "Unit 12": {
+                    "식물": "Plants",
+                    "과학": "Science",
+                    "동물원": "Zoo",
+                    "풀": "grass",
+                    "곤충": "Insects",
+                    "다양하다": "Be various",
+                    "관찰하다": "Observe",
+                    "1박2일": "one night two days",
+                    "아쉽다": "be a shame",
+                    "역사": "History",
+                    "국립 박물관": "National Museum",
+                    "야생 동물": "Wild animals",
+                    "구경하다": "look around"
+                },
+                "Unit 13": {
+                    "기차": "train",
+                    "댁": "house (honorific)",
+                    "배": "ship",
+                    "역": "station",
+                    "지하철": "subway",
+                    "출구": "exit",
+                    "입구": "entrance",
+                    "내려요": "to get off",
+                    "집들이": "housewarming party",
+                    "멀어요": "to be far",
+                    "빨라요": "to be fast",
+                    "편해요": "to be comfortable",
+                    "(이)나": "or",
+                    "걸어서": "on foot"
+                },
+                "Unit 14": {
+                    "고객": "customer",
+                    "공항": "airport",
+                    "부산": "Busan",
+                    "셔틀버스": "shuttle bus",
+                    "우체국": "post office",
+                    "운동회": "sports day",
+                    "체험 학습": "field study",
+                    "이용": "use",
+                    "이따가": "later",
+                    "일찍": "early",
+                    "지금": "now",
+                    "쯤/정도": "about"
+                },
+                "Unit 15": {
+                    "자연": "nature",
+                    "공룡": "dinosaur",
+                    "역사": "history",
+                    "복잡해요": "be crowded",
+                    "조심하다": "be careful",
+                },
+                "Unit 16": {
+                    "야구 선수": "baseball player",
+                    "배우다": "learn",
+                    "잘하다": "be good at",
+                    "잘 못하다": "be not good at",
+                    "연습하다": "to practice",
+                    "미술": "art",
+                    "미술관": "art museum",
+                    "게임을 하다": "play a game",
+                }
+            },
+            "Level 5": {
+                "Unit 1": {
+                    "계획": "plan",
+                    "늦잠": "oversleeping",
+                    "말씀": "words (honorific form of 말)",
+                    "심부름을 하다": "to do an errand",
+                    "유치원생": "kindergartner",
+                    "학년": "grade, year",
+                    "발표하다": "to make presentation",
+                    "싸우다": "to fight",
+                    "-와/과 사이좋게 지내다": "to get along with",
+                    "습관": "habit",
+                    "소원": "wish",
+                    "앞으로/이제부터": "from now on",
                 }
             }
         },
@@ -1529,7 +1618,7 @@
     }
     function restart() {
         // sampleDict = JSON.parse(JSON.stringify(mainDictionary));
-        sampleDict = JSON.parse(JSON.stringify(sampleDict));
+        sampleDict = JSON.parse(JSON.stringify(unitList[selectedUnit]));
         dictionaryKeys = Object.keys(sampleDict);
         currentNumber = 0;
         createCard();
@@ -1611,7 +1700,7 @@
         for (let level of Object.keys(levelList)) {
             let newLevelDiv = document.createElement('button');
             newLevelDiv.innerText = level;
-            newLevelDiv.addEventListener('click', function() {
+            newLevelDiv.addEventListener('click', function () {
                 initalizeUnits(language, level);
             })
             levelListDiv.append(newLevelDiv)
