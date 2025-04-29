@@ -193,7 +193,7 @@
 
             input {
                 height: 2em;
-                font-size: 15pt;
+                font-size: 11pt;
                 margin-bottom: 1em;
                 border-radius: 13px;
                 border: none;
@@ -226,12 +226,12 @@
         #vocab-list-holder {
             grid-row: 4 / 10;
             grid-column: 2 / 10;
-            font-size: 14pt;
+            font-size: 11pt;
             height: calc(100% - 2em);
         }
 
         #vocab-list {
-            height: calc(100% - 4em);
+            height: calc(100% - 6em);
             overflow: auto;
             padding: 1em;
             background-color: var(--main-div-background);
@@ -355,6 +355,10 @@
 
         .level-list-container {
             display: flex;
+            margin-bottom: 5px;
+        }
+        #level-list button {
+            margin-right: 5px;
         }
 
         @media only screen and (max-width: 1300px) {
@@ -370,14 +374,15 @@
 </head>
 
 <body>
-    <aside style="visibility: hidden;">
+    <aside style="visibility: hidden; position: absolute">
         배 안 고파요?
         네, 배 안 고파요
         아니요, 배고파요
         낮잠을 자다
 
         요리를 하다
-        음식을 만들다/하다</aside>
+        음식을 만들다/하다
+        남은 음식 muggeulgo ye oh</aside>
     <div id="grid-body"></div>
     <div id="collapse-button" onclick="toggleActionContainer()"></div>
     <div id="action-buttons-holder">
